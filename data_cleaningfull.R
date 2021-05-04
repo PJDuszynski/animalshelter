@@ -74,7 +74,7 @@ shelter_2017_clean <- shelter_2017 %>%
                          Month,
                          Year
                         ) %>% 
-                  add_column(Outcome_Subtype = rep(NA, nrow(shelter_2017)),
+                  add_column(Outcome_Subtype = rep("Not_Recorded", nrow(shelter_2017)),
                             .before = 16) # Add missing column Outcome_Subtype
 #make names uniform
 names(shelter_2017_clean) <- names(shelter_2018_2021)
@@ -113,6 +113,7 @@ shelter_full_clean <- shelter_2017_2021 %>%
 rm(shelter_2017_2021)
 
 #save final data file
-write.csv(shelter_full_clean, "shelter_2017_2021.csv")
+write.csv(shelter_full_clean, "shelter_full_clean.csv",
+          row.names = FALSE)
 
 
