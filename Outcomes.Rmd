@@ -1,0 +1,731 @@
+---
+title: "Dallas Animal Shelter Outcomes FY 2017 - FY 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, warning = FALSE, message = FALSE, fig.algin = 'center')
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(gt)
+source("shelter_visualizations.R")
+data <- read_csv("dog_cat_live_intakes.csv")
+
+fy_months <- month.abb[c(10:12, 1:9)]
+
+```
+#  {.tabset .tabset-fade .tabset-pills}
+
+## All Animals {.tabset .tabset-fade .tabset-pills}
+
+### All Years
+```{r, fig.align = 'center'}
+donut_all_image
+```
+
+```{r, fig.align = 'center'}
+porp_live_all
+```
+
+```{r}
+data %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable()
+  
+
+data %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable()
+```
+
+### 2017
+```{r, fig.align = 'center'}
+donut_all_2017_img
+```
+
+
+```{r, fig.align = 'center'}
+prop_live_all_2017
+```
+
+```{r}
+
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>%
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2018
+```{r, fig.align = 'center'}
+donut_all_2018_img
+```
+
+```{r, fig.align = 'center'}
+prop_live_all_2018
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>%
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2019
+```{r, fig.align = 'center'}
+donut_all_2019_img
+```
+
+```{r, fig.align = 'center'}
+prop_live_all_2019
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>%
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+### 2020
+```{r, fig.align = 'center'}
+donut_all_2020_img
+```
+
+```{r, fig.align = 'center'}
+prop_live_all_2020
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>%
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+### 2021 YTD
+```{r, fig.align = 'center'}
+donut_all_2021_img
+```
+ 
+```{r, fig.align = 'center'}
+prop_live_all_2021
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months[1:8]))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>%
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months[1:8]))
+```
+
+## Cats {.tabset .tabset-fade .tabset-pills}
+
+### All Years
+```{r}
+cat_donut_all_image
+```
+
+```{r}
+prop_live_cat_g
+```
+
+```{r}
+data %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  filter(Animal_Type == "Cat") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable()
+  
+
+data %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable()
+```
+
+### 2017
+```{r}
+cat_donut_17
+```
+
+```{r}
+cat_line_17
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>%
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+### 2018
+```{r}
+cat_donut_18
+```
+
+```{r}
+cat_line_18
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>%
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+### 2019
+```{r}
+cat_donut_19
+```
+
+```{r}
+cat_line_19
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>%
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+### 2020
+```{r}
+cat_donut_20
+```
+
+```{r}
+cat_line_20
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>%
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+### 2021 YTD
+```{r}
+cat_donut_21
+```
+
+```{r}
+cat_line_21
+```
+
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>% 
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months[1:8]))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>%
+  filter(Animal_Type == "Cat") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months[1:8]))
+```
+
+## Dogs {.tabset .tabset-fade .tabset-pills}
+
+### All Years
+```{r}
+dog_donut_all_image
+```
+
+```{r}
+prop_live_dog_g
+```
+
+```{r}
+data %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  filter(Animal_Type == "Dog") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable()
+  
+
+data %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Fiscal_Year) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Fiscal_Year, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable()
+```
+
+
+### 2017
+```{r}
+dog_donut_17
+```
+
+```{r}
+dog_line_17
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2017) %>%
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2018
+```{r}
+dog_donut_18
+```
+
+```{r}
+dog_line_18
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2018) %>%
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2019
+```{r}
+dog_donut_19
+```
+
+```{r}
+dog_line_19
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2019) %>%
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2020
+```{r}
+dog_donut_20
+```
+
+```{r}
+dog_line_20
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2020) %>%
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months))
+```
+
+
+### 2021 YTD
+```{r}
+dog_donut_21
+```
+
+```{r}
+dog_line_21
+```
+
+```{r}
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>% 
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Live Outcome") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  (function(.x) .x[c(1,4,5,2,3),]) %>% 
+  rename("Live Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% knitr::kable(col.names = c("Live Outcome", fy_months[1:8]))
+  
+
+data %>% 
+  mutate_at(vars(Month), my) %>% 
+  filter(Fiscal_Year == 2021) %>%
+  filter(Animal_Type == "Dog") %>% 
+  filter(Outcome_Class == "Other Outcome") %>% 
+  filter(Outcome_reclass != "Medical Treatment") %>% 
+  filter(Outcome_reclass != "Owner Intended Euthanasia") %>% 
+  group_by(Outcome_reclass, Month) %>% 
+  summarize(n = n() ) %>% 
+  pivot_wider(names_from = Month, values_from = n) %>% 
+  rename("Other Outcome" = Outcome_reclass) %>% 
+  as_tabyl() %>% 
+  adorn_totals() %>% 
+  knitr::kable(col.names = c("Other Outcome", fy_months[1:8]))
+```
+
